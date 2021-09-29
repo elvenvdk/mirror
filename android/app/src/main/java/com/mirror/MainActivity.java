@@ -42,4 +42,13 @@ public class MainActivity extends ReactActivity {
             }
         };
     }
+
+    /**
+     * Duplicate from above...
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
+    }
 }
