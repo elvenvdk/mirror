@@ -11,4 +11,4 @@ const Login = () => {
 
 const styles = StyleSheet.create({});
 
-export default Registration;
+export default Login;
