@@ -5,14 +5,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Registration from "../screens/auth/Registration";
 import Login from "../screens/auth/Login";
+import ForgotPassword from "../screens/auth/ForgotPassword";
 
 const Stack = createNativeStackNavigator();
 
 const AuthRouter = ({ navigation }) => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Registration" component={Registration} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Forgot Password" component={ForgotPassword} />
     </Stack.Navigator>
   );
 };
