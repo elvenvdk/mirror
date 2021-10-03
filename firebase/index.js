@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import firebase from "firebase";
+import { firebaseConfig } from "./config";
 
-const firebaseApp = initializeApp({});
+if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);

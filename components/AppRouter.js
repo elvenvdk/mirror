@@ -6,12 +6,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import AuthRouter from "./AuthRouter";
 
-// import { CLIENT_EMAIL } from "../config";
+import { FIREBASE_CLIENT_EMAIL } from "@env";
 
 const Stack = createStackNavigator();
 
 const AppRouter = ({ navigation }) => {
-  // console.log("CLIENT_EMAIL ", CLIENT_EMAIL);
+  console.log("CLIENT_EMAIL ", FIREBASE_CLIENT_EMAIL);
   return (
     <NavigationContainer>
       <Stack.Navigator>
