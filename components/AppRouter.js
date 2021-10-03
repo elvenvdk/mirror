@@ -2,15 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import AuthRouter from "./AuthRouter";
 
-import { StatusBar } from "expo-status-bar";
+// import { CLIENT_EMAIL } from "../config";
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const AppRouter = ({ navigation }) => {
+  // console.log("CLIENT_EMAIL ", CLIENT_EMAIL);
   return (
     <NavigationContainer>
       <Stack.Navigator>
