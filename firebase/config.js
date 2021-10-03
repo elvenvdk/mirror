@@ -4,12 +4,14 @@ import {
   FIREBASE_AUTH_DOMAIN,
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
+  FIREBASE_DATABASE_URL,
 } from "@env";
 
 export const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
   storageBucket: FIREBASE_STORAGE_BUCKET,
+  databaseURL: FIREBASE_DATABASE_URL,
   projectId: FIREBASE_PROJECT_ID,
   appId: FIREBASE_APP_ID,
 };
