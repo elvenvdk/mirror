@@ -27,6 +27,7 @@ export const registerUser = async (email, password) => {
 
 export const signinUser = async (email, password) => {
   const auth = getAuth();
+  console.log({ auth });
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -36,8 +37,9 @@ export const signinUser = async (email, password) => {
     setGlobal({
       user: userCredential.user,
     });
-    return { msg: "User successfully signined-in" };
+    return { msg: "User successfully signined-in", userCredential };
   } catch (error) {
+    console.log({ SIGNIN_USER_ERROR: error });
     return { error };
   }
 };
