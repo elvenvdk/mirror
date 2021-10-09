@@ -1,17 +1,33 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
+import { signinUser } from "../../api/auth";
+
 const Login = () => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
+
+  const signinHandler = async () => {
+    const user = await signinUser(
+      userCredentials.email,
+      userCredentials.password
+    );
+    console.log({ user });
+    if (user.error) {
+      console.log(user.error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text>Signin Here</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
+        autoCapitalize="none"
+        textContentType="emailAddress"
         onChangeText={(text) =>
           setUserCredentials({
             ...userCredentials,
@@ -22,6 +38,9 @@ const Login = () => {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        textContentType="password"
+        secureTextEntry={true}
+        autoCapitalize="none"
         onChangeText={(text) => {
           setUserCredentials({
             ...userCredentials,
@@ -29,7 +48,7 @@ const Login = () => {
           });
         }}
       />
-      <Button title="Submit" />
+      <Button title="Submit" onPress={() => signinHandler()} />
     </View>
   );
 };

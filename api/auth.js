@@ -1,24 +1,15 @@
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateEmail,
-  updatePassword,
-} from "firebase/auth";
+import { auth, db } from "../firebase";
 
 import { setGlobal } from "reactn";
 
 export const registerUser = async (email, password) => {
-  const auth = getAuth();
   try {
     // TODO email verification
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
+    const userCredential = await auth.createUserWithEmailAndPassword(
       email,
       password
     );
-    setGlobal({ user: userCredential.user });
-    return { msg: "User registration successful" };
+    return { msg: "User registration successful", userCredential };
   } catch (error) {
     console.log({ error });
     return { error };
@@ -26,18 +17,18 @@ export const registerUser = async (email, password) => {
 };
 
 export const signinUser = async (email, password) => {
-  const auth = getAuth();
-  console.log({ auth });
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
+    const userCredential = await auth.signInWithEmailAndPassword(
       email,
       password
     );
     setGlobal({
-      user: userCredential.user,
+      user: userCredential.user.uid,
     });
-    return { msg: "User successfully signined-in", userCredential };
+    return {
+      msg: "User successfully signined-in",
+      userCredential: userCredential.user.uid,
+    };
   } catch (error) {
     console.log({ SIGNIN_USER_ERROR: error });
     return { error };
