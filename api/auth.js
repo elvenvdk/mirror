@@ -9,6 +9,13 @@ export const registerUser = async (email, password) => {
       email,
       password
     );
+    await db.collection("users").doc(userCredential.user.uid).set({
+      email,
+      uid: userCredential.user.uid,
+    });
+    setGlobal({
+      userUID: userCredential.user.uid,
+    });
     return { msg: "User registration successful", userCredential };
   } catch (error) {
     console.log({ error });
@@ -23,7 +30,7 @@ export const signinUser = async (email, password) => {
       password
     );
     setGlobal({
-      user: userCredential.user.uid,
+      userUID: userCredential.user.uid,
     });
     return {
       msg: "User successfully signined-in",

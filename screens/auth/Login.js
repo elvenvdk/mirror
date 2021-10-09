@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import ThemeButton from "../../common/ThemeButton";
+import { StatusBar } from "expo-status-bar";
 
 import { signinUser } from "../../api/auth";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
@@ -21,10 +23,10 @@ const Login = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Signin Here</Text>
+    <View style={loginStyles.container}>
+      <Text style={loginStyles.headerText}>Signin Here</Text>
       <TextInput
-        style={styles.input}
+        style={loginStyles.input}
         placeholder="Email"
         autoCapitalize="none"
         textContentType="emailAddress"
@@ -36,7 +38,7 @@ const Login = () => {
         }
       />
       <TextInput
-        style={styles.input}
+        style={loginStyles.input}
         placeholder="Password"
         textContentType="password"
         secureTextEntry={true}
@@ -48,18 +50,32 @@ const Login = () => {
           });
         }}
       />
-      <Button title="Submit" onPress={() => signinHandler()} />
+      <ThemeButton title="Signin" btnOnPress={signinHandler} />
+
+      <View style={loginStyles.notRegisteredContainer}>
+        <Text style={loginStyles.notRegisteredText}>Not registered?</Text>
+        <Text
+          style={loginStyles.signupText}
+          onPress={() => navigation.navigate("Registration")}
+        >
+          Signup
+        </Text>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const loginStyles = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     fontSize: 18,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "600",
   },
   input: {
     width: "95%",
@@ -68,6 +84,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
     backgroundColor: "#dbdbdb",
+  },
+  notRegisteredContainer: {
+    flexDirection: "row",
+  },
+  notRegisteredText: {
+    fontSize: 18,
+  },
+  signupText: {
+    fontSize: 18,
+    color: "#B3630D",
+    marginLeft: 2,
   },
 });
 
