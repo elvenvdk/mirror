@@ -46,3 +46,8 @@ export const updateUserEmail = async (email) => {
   try {
   } catch (error) {}
 };
+
+export const updateUserPassword = async (password) => {
+  try {
+  } catch (error) {}
+};
