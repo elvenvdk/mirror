@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import ThemeButton from "../../common/ThemeButton";
 import { StatusBar } from "expo-status-bar";
 
-import { registerUser } from "../../api/auth";
+import { registerUser, getUser } from "../../api/auth";
 
 const Registration = ({ navigation }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -21,6 +21,13 @@ const Registration = ({ navigation }) => {
       console.log(user.error);
     }
   };
+
+  const getUserData = async () => {
+    await getUser();
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View style={registrationStyles.container}>
@@ -50,7 +57,7 @@ const Registration = ({ navigation }) => {
           });
         }}
       />
-      <ThemeButton title="Signin" btnOnPress={registrationHandler} />
+      <ThemeButton title="Signup" btnOnPress={registrationHandler} />
 
       <View style={registrationStyles.notRegisteredContainer}>
         <Text style={registrationStyles.notRegisteredText}>

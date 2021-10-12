@@ -1,6 +1,7 @@
 import { auth, db } from "../firebase";
 
-import { setGlobal } from "reactn";
+import { setGlobal, getGlobal } from "reactn";
+require("firebase/firestore");
 
 export const registerUser = async (email, password) => {
   try {
@@ -9,10 +10,18 @@ export const registerUser = async (email, password) => {
       email,
       password
     );
-    await db.collection("users").doc(userCredential.user.uid).set({
-      email,
-      uid: userCredential.user.uid,
-    });
+    console.log("REGISTERATION UID: ", userCredential.user.uid);
+    console.log("UID CONFIRMED...");
+
+    try {
+      await db.collection("users").doc(userCredential.user.uid).set({
+        email,
+        uid: userCredential.user.uid,
+      });
+    } catch (error) {
+      throw error;
+    }
+
     setGlobal({
       userUID: userCredential.user.uid,
     });
@@ -47,7 +56,16 @@ export const updateUserEmail = async (email) => {
   } catch (error) {}
 };
 
-export const updateUserPassword = async (password) => {
+export const updateUserPassword = async (password) => {};
+
+export const getUser = async () => {
+  const { userUID } = getGlobal();
+  console.log("USER UID: ", userUID);
   try {
-  } catch (error) {}
+    const user = await db.collection("users").doc(userUID).get();
+    console.log("USER DATA: ", user.data());
+    return user.data();
+  } catch (error) {
+    console.log({ GET_USER_ERROR: error });
+  }
 };

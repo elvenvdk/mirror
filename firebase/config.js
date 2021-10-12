@@ -5,6 +5,7 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
   FIREBASE_DATABASE_URL,
+  FIREBASE_MEASUREMENT_ID,
 } from "@env";
 
 export const firebaseConfig = {
@@ -14,4 +15,5 @@ export const firebaseConfig = {
   databaseURL: FIREBASE_DATABASE_URL,
   projectId: FIREBASE_PROJECT_ID,
   appId: FIREBASE_APP_ID,
+  measurementId: FIREBASE_MEASUREMENT_ID,
 };
