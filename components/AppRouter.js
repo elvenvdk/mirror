@@ -17,7 +17,7 @@ const AppRouter = ({ navigation }) => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      {/* <Stack.Navigator>
         {!user?.UID ? (
           <Stack.Screen
             name="Auth"
@@ -31,6 +31,19 @@ const AppRouter = ({ navigation }) => {
             options={{ headerShown: false }}
           />
         )}
+      </Stack.Navigator> */}
+
+      <Stack.Navigator>
+        {/* <Stack.Screen
+          name="Auth"
+          component={AuthRouter}
+          options={{ headerShown: false }}
+        /> */}
+        <Stack.Screen
+          name="Home"
+          component={ImageRouter}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
