@@ -5,7 +5,7 @@ const ShutterButton = () => {
   return (
     <View style={shutterbuttonStyles.container}>
       <TouchableOpacity style={shutterbuttonStyles.button}>
-        <Text>Gallery</Text>
+        <Text>Shutter Button</Text>
       </TouchableOpacity>
     </View>
   );
