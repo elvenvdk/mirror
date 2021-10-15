@@ -1,5 +1,5 @@
 import { auth, db } from "../firebase";
-
+import firebase from "firebase";
 import { setGlobal, getGlobal } from "reactn";
 require("firebase/firestore");
 
@@ -23,7 +23,7 @@ export const registerUser = async (email, password) => {
     }
 
     setGlobal({
-      userUID: userCredential.user.uid,
+      user: { UID: userCredential.user.uid, email: userCredential.user.email },
     });
     return { msg: "User registration successful", userCredential };
   } catch (error) {
@@ -39,12 +39,22 @@ export const signinUser = async (email, password) => {
       password
     );
     setGlobal({
-      userUID: userCredential.user.uid,
+      user: { UID: userCredential.user.uid, email: userCredential.user.email },
     });
     return {
       msg: "User successfully signined-in",
       userCredential: userCredential.user.uid,
     };
+  } catch (error) {
+    console.log({ SIGNIN_USER_ERROR: error });
+    return { error };
+  }
+};
+
+export const signoutUser = async () => {
+  try {
+    await auth.signOut();
+    return true;
   } catch (error) {
     console.log({ SIGNIN_USER_ERROR: error });
     return { error };

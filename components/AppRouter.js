@@ -1,22 +1,36 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+import { useGlobal } from "reactn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import AuthRouter from "./AuthRouter";
+import ImageRouter from "./ImageRouter";
 
 const Stack = createStackNavigator();
 
 const AppRouter = ({ navigation }) => {
+  const [user] = useGlobal("user");
+
+  console.log({ USER: user });
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Auth"
-          component={AuthRouter}
-          options={{ headerShown: false }}
-        />
+        {!user?.UID ? (
+          <Stack.Screen
+            name="Auth"
+            component={AuthRouter}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <Stack.Screen
+            name="Home"
+            component={ImageRouter}
+            options={{ headerShown: false }}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
