@@ -70,6 +70,7 @@
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
 	</array>
-
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app requires bluetooth to communicate with mirror</string>
 </dict>
 </plist>
