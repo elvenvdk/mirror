@@ -1,4 +1,4 @@
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import firebase from "firebase";
 import { setGlobal, getGlobal } from "reactn";
 require("firebase/firestore");
@@ -10,14 +10,18 @@ export const registerUser = async (email, password) => {
       email,
       password
     );
-    console.log("REGISTERATION UID: ", userCredential.user.uid);
-    console.log("UID CONFIRMED...");
 
     try {
-      await db.collection("users").doc(userCredential.user.uid).set({
-        email,
-        uid: userCredential.user.uid,
-      });
+      await db
+        .collection("users")
+        .doc(userCredential.user.uid)
+        .set({
+          email,
+          uid: userCredential.user.uid,
+          imageBucket: `${userCredential.user.uid}/images/`,
+          mirrorOwner: false,
+          mirrorId: null,
+        });
     } catch (error) {
       throw error;
     }
