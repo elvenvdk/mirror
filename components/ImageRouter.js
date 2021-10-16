@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,7 +15,17 @@ const ImageRouter = ({ navigation }) => {
   return (
     <Tab.Navigator
       initialRouteName="Shutter Button"
-      screenOptions={{ tabBarShowLabel: false }}
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerRight: () => (
+          <TouchableOpacity style={{ marginRight: 20 }}>
+            <Icon name="bluetooth" size={20} color="black" />
+          </TouchableOpacity>
+        ),
+        headerStyle: {
+          height: 100,
+        },
+      }}
     >
       <Tab.Screen
         name="Shutter Button"
