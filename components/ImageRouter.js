@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
+import BluetoothConnect from "../common/BluetoothConnect";
+
 import ShutterButton from "../screens/image/ShutterButton";
 import Gallery from "../screens/image/Gallery";
 
@@ -18,9 +20,10 @@ const ImageRouter = ({ navigation }) => {
       screenOptions={{
         tabBarShowLabel: false,
         headerRight: () => (
-          <TouchableOpacity style={{ marginRight: 20 }}>
-            <Icon name="bluetooth" size={20} color="black" />
-          </TouchableOpacity>
+          // <TouchableOpacity style={{ marginRight: 20 }}>
+          //   <Icon name="bluetooth" size={20} color="black" />
+          // </TouchableOpacity>
+          <BluetoothConnect />
         ),
         headerStyle: {
           height: 100,

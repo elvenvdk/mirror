@@ -4,8 +4,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 const ShutterButton = () => {
   return (
     <View style={shutterbuttonStyles.container}>
+      <View>
+        <Text>Images</Text>
+      </View>
       <TouchableOpacity style={shutterbuttonStyles.button}>
-        <Text>Shutter Button</Text>
+        <Text>Press Here</Text>
       </TouchableOpacity>
     </View>
   );
@@ -21,8 +24,12 @@ const shutterbuttonStyles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "grey",
     height: "80%",
     width: "90%",
   },
+  buttonText: {},
 });

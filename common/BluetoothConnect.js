@@ -42,7 +42,7 @@ const BluetoothConnect = () => {
         }
       }}
     >
-      <Icon name="bluetooth" size={20} color={!connected ? "black" : "blue"} />
+      <Icon name="bluetooth" size={25} color={!connected ? "black" : "blue"} />
     </TouchableOpacity>
   );
 };
