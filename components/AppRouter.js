@@ -17,8 +17,8 @@ const AppRouter = ({ navigation }) => {
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator>
-        {!user?.UID ? (
+      <Stack.Navigator>
+        {!user?.uid ? (
           <Stack.Screen
             name="Auth"
             component={AuthRouter}
@@ -31,20 +31,20 @@ const AppRouter = ({ navigation }) => {
             options={{ headerShown: false }}
           />
         )}
-      </Stack.Navigator> */}
+      </Stack.Navigator>
 
-      <Stack.Navigator>
-        {/* <Stack.Screen
+      {/* <Stack.Navigator> */}
+      {/* <Stack.Screen
           name="Auth"
           component={AuthRouter}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+      {/* <Stack.Screen
           name="Home"
           component={ImageRouter}
           options={{ headerShown: false }}
         />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 };

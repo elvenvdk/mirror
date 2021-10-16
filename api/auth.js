@@ -22,14 +22,15 @@ export const registerUser = async (email, password) => {
           mirrorOwner: false,
           mirrorId: null,
         });
+      const currentUser = await db
+        .collection("users")
+        .doc(userCredential.user.uid)
+        .get();
+      console.log({ CURRENT_USER: currentUser.data() });
+      setGlobal({ user: currentUser.data() });
     } catch (error) {
       throw error;
     }
-
-    setGlobal({
-      user: { UID: userCredential.user.uid, email: userCredential.user.email },
-    });
-    return { msg: "User registration successful", userCredential };
   } catch (error) {
     console.log({ error });
     return { error };
@@ -42,12 +43,16 @@ export const signinUser = async (email, password) => {
       email,
       password
     );
+    const currentUser = await db
+      .collection("users")
+      .doc(userCredential.user.uid)
+      .get();
     setGlobal({
-      user: { UID: userCredential.user.uid, email: userCredential.user.email },
+      user: currentUser.data(),
     });
     return {
       msg: "User successfully signined-in",
-      userCredential: userCredential.user.uid,
+      userCredential: currentUser.data().uid,
     };
   } catch (error) {
     console.log({ SIGNIN_USER_ERROR: error });

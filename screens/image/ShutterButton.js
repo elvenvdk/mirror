@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
+import ImageCarousel from "../../common/ImageCarousel";
+
 const ShutterButton = () => {
   return (
     <View style={shutterbuttonStyles.container}>
-      <View>
+      {/* <View>
         <Text>Images</Text>
-      </View>
+      </View> */}
+      <ImageCarousel />
       <TouchableOpacity style={shutterbuttonStyles.button}>
         <Text>Press Here</Text>
       </TouchableOpacity>
