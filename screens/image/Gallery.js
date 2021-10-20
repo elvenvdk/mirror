@@ -45,8 +45,8 @@ const Gallery = () => {
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  height: 130,
-                  width: 130,
+                  height: 136,
+                  width: 136,
                 }}
               />
             </Pressable>
@@ -54,7 +54,7 @@ const Gallery = () => {
         }}
         numColumns={3}
         keyExtractor={(item, index) => index.toString()}
-        style={{ width: "95%" }}
+        style={{ width: "100%" }}
       />
     </SafeAreaView>
   );

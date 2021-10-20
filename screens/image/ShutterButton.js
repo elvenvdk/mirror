@@ -7,6 +7,7 @@ import {
   Pressable,
   Image,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import { getImages } from "../../api/images";
 import ImageCarousel from "../../common/ImageCarousel";
@@ -36,7 +37,7 @@ const ShutterButton = () => {
   console.log({ SELECTED_IMAGE: images[selectedThumbIdx] });
 
   return (
-    <View style={shutterbuttonStyles.container}>
+    <SafeAreaView style={shutterbuttonStyles.container}>
       <ImageCarousel
         userImages={images}
         selectThumbnail={({ idx, selected }) =>
@@ -80,7 +81,7 @@ const ShutterButton = () => {
           />
         </Pressable>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
