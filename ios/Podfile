@@ -10,6 +10,9 @@ target 'mirror' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+
   # Uncomment to opt-in to using Flipper
   #
   # if !ENV['CI']

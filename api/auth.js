@@ -1,35 +1,36 @@
-import { auth, db, storage } from "../firebase";
-import firebase from "firebase";
 import { setGlobal, getGlobal } from "reactn";
-require("firebase/firestore");
+
+import auth from "@react-native-firebase/auth";
+import db from "@react-native-firebase/firestore";
 
 export const registerUser = async (email, password) => {
   try {
     // TODO email verification
-    const userCredential = await auth.createUserWithEmailAndPassword(
+    const userCredential = await auth().createUserWithEmailAndPassword(
       email,
       password
     );
 
     try {
-      await db
+      await db()
         .collection("users")
         .doc(userCredential.user.uid)
         .set({
           email,
           uid: userCredential.user.uid,
-          imageBucket: `${userCredential.user.uid}/images/`,
+          imageBucket: `${userCredential.user.uid}/images`,
           mirrorOwner: false,
           mirrorId: null,
         });
+      const currentUser = await db()
+        .collection("users")
+        .doc(userCredential.user.uid)
+        .get();
+      console.log({ CURRENT_USER: currentUser.data() });
+      setGlobal({ user: currentUser.data() });
     } catch (error) {
       throw error;
     }
-
-    setGlobal({
-      user: { UID: userCredential.user.uid, email: userCredential.user.email },
-    });
-    return { msg: "User registration successful", userCredential };
   } catch (error) {
     console.log({ error });
     return { error };
@@ -38,16 +39,20 @@ export const registerUser = async (email, password) => {
 
 export const signinUser = async (email, password) => {
   try {
-    const userCredential = await auth.signInWithEmailAndPassword(
+    const userCredential = await auth().signInWithEmailAndPassword(
       email,
       password
     );
+    const currentUser = await db()
+      .collection("users")
+      .doc(userCredential.user.uid)
+      .get();
     setGlobal({
-      user: { UID: userCredential.user.uid, email: userCredential.user.email },
+      user: currentUser.data(),
     });
     return {
       msg: "User successfully signined-in",
-      userCredential: userCredential.user.uid,
+      userCredential: currentUser.data().uid,
     };
   } catch (error) {
     console.log({ SIGNIN_USER_ERROR: error });
@@ -57,7 +62,7 @@ export const signinUser = async (email, password) => {
 
 export const signoutUser = async () => {
   try {
-    await auth.signOut();
+    await auth().signOut();
     return true;
   } catch (error) {
     console.log({ SIGNIN_USER_ERROR: error });
@@ -76,7 +81,7 @@ export const getUser = async () => {
   const { userUID } = getGlobal();
   console.log("USER UID: ", userUID);
   try {
-    const user = await db.collection("users").doc(userUID).get();
+    const user = await db().collection("users").doc(userUID).get();
     console.log("USER DATA: ", user.data());
     return user.data();
   } catch (error) {
