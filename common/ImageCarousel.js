@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
+  FlatList,
   Image,
+  Pressable,
   StyleSheet,
   Text,
   View,
-  FlatList,
-  Pressable,
 } from "react-native";
 
-const ImageCarousel = ({ userImages }) => {
-  // console.log("USER IMAGES FROM CAROUSEL", userImages);
-  const [images, setImages] = useState(userImages);
+const ImageCarousel = ({ userImages, selectThumbnail }) => {
   const [imageSelected, setImageSelected] = useState(null);
 
   return (
@@ -19,14 +17,14 @@ const ImageCarousel = ({ userImages }) => {
         <FlatList
           horizontal
           data={userImages}
-          renderItem={(item, index) => {
-            console.log("ITEM IN FLATLIST ", item.item);
+          renderItem={(item) => {
             return (
               <Pressable
                 underlayColor="red"
                 onPress={() => {
-                  console.log("Pressed!", item.index);
                   setImageSelected(item.index);
+                  // console.log("SELECTED IMAGE", item);
+                  selectThumbnail({ idx: item.index, selected: true });
                 }}
               >
                 <Image
@@ -46,7 +44,6 @@ const ImageCarousel = ({ userImages }) => {
           keyExtractor={(item) => item}
         />
       ) : (
-        // <Text style={noImagesText}>Almost There...</Text>
         <Text style={noImagesText}>No Images Yet...</Text>
       )}
     </View>

@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
+  View,
+  Pressable,
   Image,
-  FlatList,
+  Alert,
 } from "react-native";
-
-import ImageCarousel from "../../common/ImageCarousel";
-
 import { getImages } from "../../api/images";
+import ImageCarousel from "../../common/ImageCarousel";
 
 const ShutterButton = () => {
   const [images, setImages] = useState([]);
+  const [selectedThumbIdx, setSelectedThumbIdx] = useState(null);
+  const [isThumbnailSelected, setIsThumbnailSelected] = useState(false);
 
   const fetchImages = async () => {
     const userImages = await getImages();
@@ -26,17 +27,59 @@ const ShutterButton = () => {
     fetchImages();
   }, []);
 
-  console.log({ USER_IMAGES: images });
+  const onSelectImage = ({ idx, selected }) => {
+    console.log({ idx, selected });
+    setIsThumbnailSelected(selected);
+    setSelectedThumbIdx(idx);
+  };
+
+  console.log({ SELECTED_IMAGE: images[selectedThumbIdx] });
 
   return (
     <View style={shutterbuttonStyles.container}>
-      <View>
-        <Text>Images</Text>
-      </View>
-      <ImageCarousel userImages={images} />
-      <TouchableOpacity style={shutterbuttonStyles.button}>
-        <Text>Press Here</Text>
-      </TouchableOpacity>
+      <ImageCarousel
+        userImages={images}
+        selectThumbnail={({ idx, selected }) =>
+          onSelectImage({ idx, selected })
+        }
+      />
+      {!isThumbnailSelected ? (
+        <TouchableOpacity style={shutterbuttonStyles.button}>
+          <Text>Press Here</Text>
+        </TouchableOpacity>
+      ) : (
+        <Pressable
+          style={shutterbuttonStyles.selectedImage}
+          onPressIn={() => {
+            Alert.alert("What do you want to do?", "Pick one", [
+              {
+                text: "Shutter",
+                onPress: () => {
+                  setIsThumbnailSelected(false);
+                },
+              },
+              {
+                text: "Save to Library",
+                onPress: () => {
+                  console.log("SAVED TO LIBRARY");
+                  return;
+                },
+              },
+              {
+                text: "Cancel",
+                onPress: () => {
+                  return;
+                },
+              },
+            ]);
+          }}
+        >
+          <Image
+            style={shutterbuttonStyles.image}
+            source={{ uri: images[selectedThumbIdx] }}
+          />
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -57,6 +100,17 @@ const shutterbuttonStyles = StyleSheet.create({
     backgroundColor: "grey",
     height: "80%",
     width: "90%",
+  },
+  selectedImage: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80%",
+    width: "90%",
+  },
+  image: {
+    height: 600,
+    width: 350,
   },
   buttonText: {},
 });
