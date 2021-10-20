@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 
 import Carousel from "react-native-snap-carousel";
 
-const ImageCarousel = () => {
-  const [images, setImages] = useState([]);
+const ImageCarousel = ({ userImages }) => {
+  const [images, setImages] = useState(userImages);
 
   const renderItem = ({ item, idx }) => (
     <View>
@@ -14,10 +14,10 @@ const ImageCarousel = () => {
 
   return (
     <View style={container}>
-      {images.length ? (
+      {userImages?.length ? (
         <Carousel
-          data={images}
-          renderItem={renderItem}
+          data={userImages}
+          renderItem={renderItem()}
           layout={"stack"}
           layoutCardOffset={"18"}
         />

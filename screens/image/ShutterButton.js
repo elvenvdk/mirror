@@ -1,15 +1,32 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 
 import ImageCarousel from "../../common/ImageCarousel";
 
+import { getImages } from "../../api/images";
+
 const ShutterButton = () => {
+  const [images, setImages] = useState([]);
+
+  const fetchImages = async () => {
+    const userImages = await getImages();
+    setImages(userImages);
+    if (userImages.error) {
+      console.log({ USER_IMAGES_ERROR: userImages.error });
+    }
+  };
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  console.log(images);
+
   return (
     <View style={shutterbuttonStyles.container}>
       {/* <View>
         <Text>Images</Text>
       </View> */}
-      <ImageCarousel />
+      {/* <ImageCarousel userImages={images} /> */}
       <TouchableOpacity style={shutterbuttonStyles.button}>
         <Text>Press Here</Text>
       </TouchableOpacity>

@@ -19,12 +19,7 @@ const ImageRouter = ({ navigation }) => {
       initialRouteName="Shutter Button"
       screenOptions={{
         tabBarShowLabel: false,
-        headerRight: () => (
-          // <TouchableOpacity style={{ marginRight: 20 }}>
-          //   <Icon name="bluetooth" size={20} color="black" />
-          // </TouchableOpacity>
-          <BluetoothConnect />
-        ),
+        headerRight: () => <BluetoothConnect />,
         headerStyle: {
           height: 100,
         },
