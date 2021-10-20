@@ -1,27 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-
-import Carousel from "react-native-snap-carousel";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Pressable,
+} from "react-native";
 
 const ImageCarousel = ({ userImages }) => {
+  // console.log("USER IMAGES FROM CAROUSEL", userImages);
   const [images, setImages] = useState(userImages);
-
-  const renderItem = ({ item, idx }) => (
-    <View>
-      <Text>{item.title}</Text>
-    </View>
-  );
+  const [imageSelected, setImageSelected] = useState(null);
 
   return (
     <View style={container}>
       {userImages?.length ? (
-        <Carousel
+        <FlatList
+          horizontal
           data={userImages}
-          renderItem={renderItem()}
-          layout={"stack"}
-          layoutCardOffset={"18"}
+          renderItem={(item, index) => {
+            console.log("ITEM IN FLATLIST ", item.item);
+            return (
+              <Pressable
+                underlayColor="red"
+                onPress={() => {
+                  console.log("Pressed!", item.index);
+                  setImageSelected(item.index);
+                }}
+              >
+                <Image
+                  source={{ uri: item.item }}
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderWidth: 1.5,
+                    borderColor:
+                      imageSelected === item.index ? "yellow" : "black",
+                    marginRight: 2,
+                  }}
+                />
+              </Pressable>
+            );
+          }}
+          keyExtractor={(item) => item}
         />
       ) : (
+        // <Text style={noImagesText}>Almost There...</Text>
         <Text style={noImagesText}>No Images Yet...</Text>
       )}
     </View>
@@ -35,12 +60,12 @@ const imageCarouselStyles = StyleSheet.create({
     height: "15%",
     width: "90%",
     marginBottom: 10,
-    borderWidth: 0.5,
-    borderColor: "grey",
-    backgroundColor: "#423A42",
   },
   noImagesText: {
     color: "#ffffff",
+  },
+  thumbnail: {
+    marginRight: 2,
   },
 });
 const { container, noImagesText } = imageCarouselStyles;

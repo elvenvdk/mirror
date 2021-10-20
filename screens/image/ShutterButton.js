@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+} from "react-native";
 
 import ImageCarousel from "../../common/ImageCarousel";
 
@@ -19,14 +26,14 @@ const ShutterButton = () => {
     fetchImages();
   }, []);
 
-  console.log(images);
+  console.log({ USER_IMAGES: images });
 
   return (
     <View style={shutterbuttonStyles.container}>
-      {/* <View>
+      <View>
         <Text>Images</Text>
-      </View> */}
-      {/* <ImageCarousel userImages={images} /> */}
+      </View>
+      <ImageCarousel userImages={images} />
       <TouchableOpacity style={shutterbuttonStyles.button}>
         <Text>Press Here</Text>
       </TouchableOpacity>
