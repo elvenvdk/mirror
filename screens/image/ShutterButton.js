@@ -50,7 +50,7 @@ const ShutterButton = () => {
       ) : (
         <Pressable
           style={shutterbuttonStyles.selectedImage}
-          onPressIn={() => {
+          onLongPress={() => {
             Alert.alert("What do you want to do?", "Pick one", [
               {
                 text: "Shutter",
@@ -109,8 +109,8 @@ const shutterbuttonStyles = StyleSheet.create({
     width: "90%",
   },
   image: {
-    height: 600,
-    width: 350,
+    height: "100%",
+    width: "100%",
   },
   buttonText: {},
 });
