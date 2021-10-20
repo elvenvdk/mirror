@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -9,10 +10,14 @@ import {
   SafeAreaView,
 } from "react-native";
 
+import ImageCarousel from "../../common/ImageCarousel";
+
 import { getImages } from "../../api/images";
 
 const Gallery = () => {
   const [galleryImages, setGalleryImages] = useState([]);
+  const [selectedThumbnailIdx, setSelectedThumbnailIdx] = useState(null);
+  const [showImage, setShowImage] = useState(false);
 
   const fetchImages = async () => {
     try {
@@ -27,35 +32,90 @@ const Gallery = () => {
     fetchImages();
   }, []);
 
+  const onSelectImage = ({ idx, selected }) => {
+    console.log({ idx, selected });
+    setShowImage(selected);
+    setSelectedThumbnailIdx(idx);
+  };
+
   console.log({ GALLERY_IMAGES: galleryImages });
 
   return (
     <SafeAreaView style={galleryStyles.container}>
-      <FlatList
-        data={galleryImages}
-        renderItem={(item) => {
-          return (
-            <Pressable
-              style={{
-                margin: 1,
-              }}
-            >
-              <Image
-                source={{ uri: item.item }}
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: 136,
-                  width: 136,
+      {!showImage ? (
+        <FlatList
+          data={galleryImages}
+          renderItem={(item) => {
+            return (
+              <Pressable
+                onPress={() => {
+                  onSelectImage({ idx: item.index, selected: true });
                 }}
-              />
-            </Pressable>
-          );
-        }}
-        numColumns={3}
-        keyExtractor={(item, index) => index.toString()}
-        style={{ width: "100%" }}
-      />
+                style={{
+                  margin: 1,
+                }}
+              >
+                <Image
+                  source={{ uri: item.item }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 136,
+                    width: 136,
+                    borderWidth: 1.5,
+                    borderColor:
+                      selectedThumbnailIdx === item.index ? "yellow" : "black",
+                    marginRight: 2,
+                  }}
+                />
+              </Pressable>
+            );
+          }}
+          numColumns={3}
+          keyExtractor={(item, index) => index.toString()}
+          style={{ width: "100%" }}
+        />
+      ) : (
+        <>
+          <ImageCarousel
+            userImages={galleryImages}
+            selectThumbnail={({ idx, selected }) =>
+              onSelectImage({ idx, selected })
+            }
+          />
+          <Pressable
+            style={galleryStyles.selectedImage}
+            onLongPress={() => {
+              Alert.alert("What do you want to do?", "Pick one", [
+                {
+                  text: "Grid View",
+                  onPress: () => {
+                    setShowImage(false);
+                  },
+                },
+                {
+                  text: "Save to Library",
+                  onPress: () => {
+                    console.log("SAVED TO LIBRARY");
+                    return;
+                  },
+                },
+                {
+                  text: "Cancel",
+                  onPress: () => {
+                    return;
+                  },
+                },
+              ]);
+            }}
+          >
+            <Image
+              style={galleryStyles.image}
+              source={{ uri: galleryImages[selectedThumbnailIdx] }}
+            />
+          </Pressable>
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -67,6 +127,17 @@ const galleryStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+    width: "100%",
+  },
+  selectedImage: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80%",
+    width: "90%",
+  },
+  image: {
+    height: "100%",
     width: "100%",
   },
 });
