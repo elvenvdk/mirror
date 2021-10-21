@@ -9,6 +9,7 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { getImages } from "../../api/images";
 import ImageCarousel from "../../common/ImageCarousel";
 
@@ -48,6 +49,8 @@ const ShutterButton = () => {
         <TouchableOpacity style={shutterbuttonStyles.button}>
           <Text>Press Here</Text>
         </TouchableOpacity>
+      ) : !images ? (
+        <StatusBar style="light" />
       ) : (
         <Pressable
           style={shutterbuttonStyles.selectedImage}

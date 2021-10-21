@@ -33,7 +33,7 @@ const Gallery = () => {
 
   useEffect(() => {
     fetchImages();
-  }, []);
+  }, [showImage]);
 
   const onSelectImage = ({ idx, selected }) => {
     console.log({ idx, selected });
