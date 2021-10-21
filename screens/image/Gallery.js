@@ -9,6 +9,9 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
+import GestureRecognizer, {
+  swipeDirections,
+} from "react-native-swipe-gestures";
 
 import ImageCarousel from "../../common/ImageCarousel";
 
@@ -83,37 +86,57 @@ const Gallery = () => {
               onSelectImage({ idx, selected })
             }
           />
-          <Pressable
-            style={galleryStyles.selectedImage}
-            onLongPress={() => {
-              Alert.alert("What do you want to do?", "Pick one", [
-                {
-                  text: "Grid View",
-                  onPress: () => {
-                    setShowImage(false);
-                  },
-                },
-                {
-                  text: "Save to Library",
-                  onPress: () => {
-                    console.log("SAVED TO LIBRARY");
-                    return;
-                  },
-                },
-                {
-                  text: "Cancel",
-                  onPress: () => {
-                    return;
-                  },
-                },
-              ]);
+          <GestureRecognizer
+            style={{
+              height: "100%",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 0,
+            }}
+            onSwipeLeft={(state) => {
+              if (selectedThumbnailIdx < galleryImages?.length - 1) {
+                setSelectedThumbnailIdx(selectedThumbnailIdx + 1);
+              }
+            }}
+            onSwipeRight={(state) => {
+              if (selectedThumbnailIdx > 0) {
+                setSelectedThumbnailIdx(selectedThumbnailIdx - 1);
+              }
             }}
           >
-            <Image
-              style={galleryStyles.image}
-              source={{ uri: galleryImages[selectedThumbnailIdx] }}
-            />
-          </Pressable>
+            <Pressable
+              style={galleryStyles.selectedImage}
+              onLongPress={() => {
+                Alert.alert("What do you want to do?", "Pick one", [
+                  {
+                    text: "Grid View",
+                    onPress: () => {
+                      setShowImage(false);
+                    },
+                  },
+                  {
+                    text: "Save to Library",
+                    onPress: () => {
+                      console.log("SAVED TO LIBRARY");
+                      return;
+                    },
+                  },
+                  {
+                    text: "Cancel",
+                    onPress: () => {
+                      return;
+                    },
+                  },
+                ]);
+              }}
+            >
+              <Image
+                style={galleryStyles.image}
+                source={{ uri: galleryImages[selectedThumbnailIdx] }}
+              />
+            </Pressable>
+          </GestureRecognizer>
         </>
       )}
     </SafeAreaView>
@@ -130,6 +153,8 @@ const galleryStyles = StyleSheet.create({
     width: "100%",
   },
   selectedImage: {
+    position: "relative",
+    bottom: 55,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
