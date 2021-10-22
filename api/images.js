@@ -12,5 +12,6 @@ export const getImages = async () => {
     return Promise.all(imageUrlPromises);
   } catch (error) {
     console.log({ error });
+    return error;
   }
 };
