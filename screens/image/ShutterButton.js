@@ -7,7 +7,9 @@ import {
   Pressable,
   Image,
   Alert,
+  SafeAreaView,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { getImages } from "../../api/images";
 import ImageCarousel from "../../common/ImageCarousel";
 
@@ -36,7 +38,7 @@ const ShutterButton = () => {
   console.log({ SELECTED_IMAGE: images[selectedThumbIdx] });
 
   return (
-    <View style={shutterbuttonStyles.container}>
+    <SafeAreaView style={shutterbuttonStyles.container}>
       <ImageCarousel
         userImages={images}
         selectThumbnail={({ idx, selected }) =>
@@ -47,6 +49,8 @@ const ShutterButton = () => {
         <TouchableOpacity style={shutterbuttonStyles.button}>
           <Text>Press Here</Text>
         </TouchableOpacity>
+      ) : !images ? (
+        <StatusBar style="light" />
       ) : (
         <Pressable
           style={shutterbuttonStyles.selectedImage}
@@ -80,7 +84,7 @@ const ShutterButton = () => {
           />
         </Pressable>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
