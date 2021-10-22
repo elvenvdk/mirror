@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useGlobal } from "reactn";
 import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 const BluetoothConnect = () => {
-  const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useGlobal("connected");
   return (
     <TouchableOpacity
       style={container}
