@@ -9,6 +9,7 @@ import BluetoothConnect from "../common/BluetoothConnect";
 
 import ShutterButton from "../screens/image/ShutterButton";
 import Gallery from "../screens/image/Gallery";
+import SettingsButton from "../common/SettingsButton";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,6 +21,10 @@ const ImageRouter = ({ navigation }) => {
       screenOptions={{
         tabBarShowLabel: false,
         headerRight: () => <BluetoothConnect />,
+        headerStyle: {
+          height: 100,
+        },
+        headerLeft: () => <SettingsButton />,
         headerStyle: {
           height: 100,
         },

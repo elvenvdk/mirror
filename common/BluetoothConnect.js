@@ -4,23 +4,24 @@ import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 const BluetoothConnect = () => {
-  const [connected, setConnected] = useGlobal("connected");
+  const [bluetoothConnected, setBluetoothConnected] =
+    useGlobal("bluetoothConnected");
   return (
     <TouchableOpacity
       style={container}
       onPress={() => {
-        if (!connected) {
+        if (!bluetoothConnected) {
           Alert.alert("Bluetooth", "Connect to Mirror?", [
             {
               text: "Connect",
               onPress: () => {
-                setConnected(true);
+                setBluetoothConnected(true);
               },
             },
             {
               text: "Cancel",
               onPress: () => {
-                setConnected(false);
+                setBluetoothConnected(false);
                 return;
               },
             },
@@ -30,7 +31,7 @@ const BluetoothConnect = () => {
             {
               text: "Disconnect",
               onPress: () => {
-                setConnected(false);
+                setBluetoothConnected(false);
               },
             },
             {
@@ -43,7 +44,11 @@ const BluetoothConnect = () => {
         }
       }}
     >
-      <Icon name="bluetooth" size={25} color={!connected ? "black" : "blue"} />
+      <Icon
+        name="bluetooth"
+        size={25}
+        color={!bluetoothConnected ? "black" : "blue"}
+      />
     </TouchableOpacity>
   );
 };
