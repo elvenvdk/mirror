@@ -50,6 +50,8 @@ export const signinUser = async (email, password) => {
     setGlobal({
       user: currentUser.data(),
     });
+    const user = auth().currentUser;
+    console.log({ AUTH_CURRENT_USER: user });
     return {
       msg: "User successfully signined-in",
       userCredential: currentUser.data().uid,
@@ -72,10 +74,28 @@ export const signoutUser = async () => {
 
 export const updateUserEmail = async (email) => {
   try {
-  } catch (error) {}
+    const user = auth().currentUser;
+    await user.updateEmail(email);
+    await db().collection("users").doc(user.uid).update({
+      email,
+    });
+    return { msg: "Email successfully updated" };
+  } catch (error) {
+    console.log({ UPDATE_EMAIL_ERROR: error });
+    return { error };
+  }
 };
 
-export const updateUserPassword = async (password) => {};
+export const updateUserPassword = async (password) => {
+  try {
+    const user = auth().currentUser;
+    await user.updatePassword(password);
+    return { msg: "Password successfully updated" };
+  } catch (error) {
+    console.log({ UPDATE_PW_EROR: error });
+    return { error };
+  }
+};
 
 export const getUser = async () => {
   const { userUID } = getGlobal();
