@@ -11,7 +11,7 @@ const Settings = () => {
     <TouchableOpacity
       style={settingsStyle.container}
       onPress={() => {
-        navigation.navigate("OptionsRoutes");
+        navigation.navigate("OptionsRouter");
       }}
     >
       <Icon name="user-cog" size={25} />
