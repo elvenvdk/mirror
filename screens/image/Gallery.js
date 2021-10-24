@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getGlobal, useGlobal } from "reactn";
 import {
   Alert,
   StyleSheet,
@@ -17,7 +18,8 @@ import ImageCarousel from "../../common/ImageCarousel";
 
 import { getImages } from "../../api/images";
 
-const Gallery = () => {
+const Gallery = ({ navigation }) => {
+  const [user] = useGlobal("user");
   const [galleryImages, setGalleryImages] = useState([]);
   const [selectedThumbnailIdx, setSelectedThumbnailIdx] = useState(null);
   const [showImage, setShowImage] = useState(false);
@@ -32,6 +34,9 @@ const Gallery = () => {
   };
 
   useEffect(() => {
+    if (!Object.keys(user).length) {
+      navigation.navigate("Login");
+    }
     fetchImages();
   }, [showImage]);
 

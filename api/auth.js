@@ -65,6 +65,7 @@ export const signinUser = async (email, password) => {
 export const signoutUser = async () => {
   try {
     await auth().signOut();
+    setGlobal({ user: {} });
     return true;
   } catch (error) {
     console.log({ SIGNIN_USER_ERROR: error });
