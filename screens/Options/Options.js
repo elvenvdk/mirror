@@ -31,6 +31,7 @@ const Options = () => {
         iconLeft="sign-out-alt"
         rowOnpress={async () => {
           await signoutUser();
+          navigation.navigate("Home");
         }}
       />
     </View>

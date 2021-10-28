@@ -1,48 +1,47 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
+import { useGlobal } from "reactn";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import { useRoute } from "@react-navigation/native";
 
 import BluetoothConnect from "../common/BluetoothConnect";
 
-import ShutterButton from "../screens/image/ShutterButton";
-import Gallery from "../screens/image/Gallery";
 import SettingsButton from "../common/SettingsButton";
+import BackBtn from "../common/BackBtn";
+
+import TabsRouter from "./TabsRouter";
+import Options from "./OptionsRouter";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const ImageRouter = ({ navigation }) => {
+  const [currentRoute, setCurrentRoute] = useGlobal("currentRoute");
+  const route = useRoute();
+
+  useEffect(() => {
+    setCurrentRoute(route.name);
+  }, []);
+
+  console.log({ ROUTE_NAME: currentRoute });
+
   return (
-    <Tab.Navigator
-      initialRouteName="Shutter Button"
+    <Stack.Navigator
+      initialRouteName="Home"
       screenOptions={{
-        tabBarShowLabel: false,
         headerRight: () => <BluetoothConnect />,
         headerStyle: {
           height: 100,
         },
-        headerLeft: () => <SettingsButton />,
+        headerLeft: () =>
+          currentRoute === "Settings" ? <BackBtn /> : <SettingsButton />,
         headerStyle: {
           height: 100,
         },
       }}
     >
-      <Tab.Screen
-        name="Shutter Button"
-        component={ShutterButton}
-        options={{
-          tabBarIcon: () => <Icon name="camera" size={30} />,
-        }}
-      />
-      <Tab.Screen
-        name="Image Gallery"
-        component={Gallery}
-        options={{ tabBarIcon: () => <Icon name="images" size={30} /> }}
-      />
-    </Tab.Navigator>
+      <Stack.Screen name="Home" component={TabsRouter} />
+      <Stack.Screen name="Settings" component={Options} />
+    </Stack.Navigator>
   );
 };
 

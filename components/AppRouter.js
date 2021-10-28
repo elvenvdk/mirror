@@ -3,7 +3,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useGlobal } from "reactn";
-import OptionsRouter from "./OptionsRouter";
 import AuthRouter from "./AuthRouter";
 import ImageRouter from "./ImageRouter";
 
@@ -25,16 +24,11 @@ const AppRouter = ({ navigation }) => {
           />
         ) : (
           <Stack.Screen
-            name="Home"
+            name="Main"
             component={ImageRouter}
             options={{ headerShown: false }}
           />
         )}
-        <Stack.Screen
-          name="OptionsRouter"
-          component={OptionsRouter}
-          options={{ headerShown: true, title: "Settings" }}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
