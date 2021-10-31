@@ -10,25 +10,40 @@ const UpdatePassword = () => {
   const navigation = useNavigation();
   const [password, setPassword] = useState("");
   const [matchedPassword, setMatchedPassword] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const changeTextHandler = (txt) => {
-    setPassword(txt);
+  const changeTextHandler = (type, txt) => {
+    switch (type) {
+      case "PASSWORD":
+        setPassword(txt);
+      case "MATCH_PASSWORD":
+        setMatchedPassword(txt);
+      default:
+        return;
+    }
   };
+
+  const renderMessage = (title, message) => Alert.alert(title, message);
 
   const submitHandler = async () => {
     try {
       setLoading(true);
+      if (password !== matchedPassword) {
+        setLoading(false);
+        renderMessage("Error", "Passwords must match");
+        return;
+      }
       if (password.length) {
         const res = await updateUserPassword(password);
-        Alert.alert("Success", res.msg);
         setLoading(false);
+        renderMessage("Success", "Password successfully updated");
         if (!loading) navigation.goBack();
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
-      Alert.alert("Error", "There was an error updating your password");
+      renderMessage("Error", "There was an error updating your password");
     }
   };
 
@@ -40,7 +55,7 @@ const UpdatePassword = () => {
         textContentType="password"
         secureTextEntry={true}
         onChangeText={(txt) => {
-          changeTextHandler(txt);
+          changeTextHandler("PASSWORD", txt);
         }}
         style={updatePassword.input}
       />
@@ -48,8 +63,9 @@ const UpdatePassword = () => {
         placeholder="Enter password again"
         autoCapitalize="none"
         textContentType="password"
+        secureTextEntry={true}
         onChangeText={(txt) => {
-          changeTextHandler(txt);
+          changeTextHandler("MATCH_PASSWORD", txt);
         }}
         style={updatePassword.input}
       />
