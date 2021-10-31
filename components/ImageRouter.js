@@ -40,7 +40,11 @@ const ImageRouter = ({ navigation }) => {
       }}
     >
       <Stack.Screen name="Home" component={TabsRouter} />
-      <Stack.Screen name="Settings" component={Options} />
+      <Stack.Screen
+        name="Settings"
+        component={Options}
+        // options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

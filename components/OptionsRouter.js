@@ -5,6 +5,8 @@ import { useGlobal } from "reactn";
 import { StyleSheet } from "react-native";
 import BluetoothConnect from "../common/BluetoothConnect";
 import Options from "../screens/Options/Options";
+import UpdateEmail from "../screens/auth/UpdateEmail";
+import UpdatePassword from "../screens/auth/UpdatePassword";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,18 +22,27 @@ const UserRouter = ({ navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName="Options"
-      screenOptions={{
-        tabBarShowLabel: false,
-        headerRight: () => <BluetoothConnect />,
-        headerStyle: {
-          height: 100,
-        },
-      }}
+      // screenOptions={{
+      //   headerRight: () => <BluetoothConnect />,
+      //   headerStyle: {
+      //     height: 100,
+      //   },
+      // }}
     >
       <Stack.Screen
         name="Options"
         component={Options}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Update Email"
+        component={UpdateEmail}
+        // options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Update Password"
+        component={UpdatePassword}
+        // options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

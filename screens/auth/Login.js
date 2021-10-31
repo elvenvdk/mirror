@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Alert } from "react-native";
 import ThemeButton from "../../common/ThemeButton";
-import { StatusBar } from "expo-status-bar";
 
 import { signinUser } from "../../api/auth";
 
@@ -18,7 +17,7 @@ const Login = ({ navigation }) => {
     );
     console.log({ user });
     if (user.error) {
-      console.log(user.error);
+      Alert.alert("Authentication Error", "Incorrect usename or password");
     }
   };
 

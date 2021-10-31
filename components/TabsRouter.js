@@ -17,7 +17,10 @@ const TabsRouter = ({ navigation }) => {
   }, []);
 
   return (
-    <Tab.Navigator initialRouteName="Shutter Button">
+    <Tab.Navigator
+      initialRouteName="Shutter Button"
+      screenOptions={{ headerShown: false }}
+    >
       <Tab.Screen
         name="Shutter Button"
         component={ShutterButton}
